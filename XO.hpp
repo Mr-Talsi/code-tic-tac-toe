@@ -14,6 +14,9 @@ public:
     char GetTurn();
     int equalitecheck();
     void mode(string& mode, int& x);
+    bool takeCorner(int &x);
+    bool canBlock(int &x);
+    bool canWin(int &x);
 
 private:
     int cell[3][3];
