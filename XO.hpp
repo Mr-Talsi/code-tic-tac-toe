@@ -17,11 +17,12 @@ public:
     bool takeCorner(int &x);
     bool canBlock(int &x);
     bool canWin(int &x);
-
+    void setniveau(int niveau);
 private:
     int cell[3][3];
     void ShowBoard(void);
     int turn;
+    int level;
 };
 void check(int &starter);
 
