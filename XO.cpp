@@ -379,6 +379,11 @@ bool tictatoe::canBlock(int &x)
     return false;
 };
 
+void tictatoe::setniveau(int niveau)
+{
+    level=niveau;
+};
+
 void tictatoe::mode(string &mode, int &x)
 {
     if (mode == "normal")
@@ -399,34 +404,68 @@ void tictatoe::mode(string &mode, int &x)
             cout << "player " << GetTurn() << ":";
             srand(time(0));
             x = rand() % 9 + 1;
-            if (canWin(x))
-            {
-                cout << "Robot plays to win: " << x << "\n";
-            }
-            // 2. Bloquer l'adversaire
-            else if (canBlock(x))
-            {
-                cout << "Robot blocks player: " << x << "\n";
-            }
-            // 3. Prendre le centre si disponible
-            else if (cell[1][1] == 0)
-            {
-                x = 5;
-                cout << "Robot takes center: " << x << "\n";
-            }
-            else if (takeCorner(x))
-            {
-                cout << "Robot takes a corner: " << x << "\n";
-            }
-
-            else
+            if (level== 1)
             {
                 while (x == a || cell[(x - 1) / 3][(x - 1) % 3] != 0)
                 {
                     srand(time(0));
                     x = rand() % 9 + 1;
                 }
-                cout << "Robot plays: " << x << "\n";
+                cout << "Robot plays--> " << x << "\n";
+            }
+            else if (level == 2)
+            {
+                if (canWin(x))
+                {
+                    cout << "Robot plays to win--> " << x << "\n";
+                }
+                // 2. Bloquer l'adversaire
+                else if (canBlock(x))
+                {
+                    cout << "Robot blocks player--> " << x << "\n";
+                }
+                else
+                {
+                    while (x == a || cell[(x - 1) / 3][(x - 1) % 3] != 0)
+                    {
+                        srand(time(0));
+                        x = rand() % 9 + 1;
+                    }
+                    cout << "Robot plays--> " << x << "\n";
+                }
+            }
+            else
+            {
+                if (canWin(x))
+                {
+                    cout <<"Robot plays to win--> " << x << "\n";
+                }
+                // 2. Bloquer l'adversaire
+                else if (canBlock(x))
+                {
+                    cout <<"Robot blocks player--> "<< x << "\n";
+                }
+                // 3. Prendre le centre si disponible
+                else if (cell[1][1] == 0)
+                {
+                    x = 5;
+                    cout << "Robot takes center--> " << x << "\n";
+                }
+                else if (takeCorner(x))
+                {
+                    cout << "Robot takes a corner--> " << x << "\n";
+                }
+
+                else
+                {
+                    while (x == a || cell[(x - 1) / 3][(x - 1) % 3] != 0)
+                    {
+                        srand(time(0));
+                        x = rand() % 9 + 1;
+                    }
+                    cout << "Robot plays--> " << x << "\n";
+                }
+            
             }
         }
     }
