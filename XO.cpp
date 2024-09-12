@@ -202,6 +202,75 @@ int tictatoe::equalitecheck()
     }
     return 0;
 };
+bool tictatoe::takeCorner(int &x)
+{
+    // Vérifiez si un des coins est disponible, si oui, attribuez cette case à 'x'
+    if (cell[0][0] == 0) { x = 1; return true; }
+    if (cell[0][2] == 0) { x = 3; return true; }
+    if (cell[2][0] == 0) { x = 7; return true; }
+    if (cell[2][2] == 0) { x = 9; return true; }
+    return false;
+};
+
+
+bool tictatoe::canWin(int &x)
+{
+    // Vérifie les lignes
+    for (int i = 0; i < 3; i++)
+    {
+        if (cell[i][0] == 2 && cell[i][1] == 2 && cell[i][2] == 0) { x = i * 3 + 3; return true; }
+        if (cell[i][0] == 2 && cell[i][1] == 0 && cell[i][2] == 2) { x = i * 3 + 2; return true; }
+        if (cell[i][0] == 0 && cell[i][1] == 2 && cell[i][2] == 2) { x = i * 3 + 1; return true; }
+    }
+    
+    // Vérifie les colonnes
+    for (int i = 0; i < 3; i++)
+    {
+        if (cell[0][i] == 2 && cell[1][i] == 2 && cell[2][i] == 0) { x = 7 + i; return true; }
+        if (cell[0][i] == 2 && cell[1][i] == 0 && cell[2][i] == 2) { x = 4 + i; return true; }
+        if (cell[0][i] == 0 && cell[1][i] == 2 && cell[2][i] == 2) { x = 1 + i; return true; }
+    }
+
+    // Vérifie les diagonales
+    if (cell[0][0] == 2 && cell[1][1] == 2 && cell[2][2] == 0) { x = 9; return true; }
+    if (cell[0][0] == 2 && cell[1][1] == 0 && cell[2][2] == 2) { x = 5; return true; }
+    if (cell[0][0] == 0 && cell[1][1] == 2 && cell[2][2] == 2) { x = 1; return true; }
+
+    if (cell[0][2] == 2 && cell[1][1] == 2 && cell[2][0] == 0) { x = 7; return true; }
+    if (cell[0][2] == 2 && cell[1][1] == 0 && cell[2][0] == 2) { x = 5; return true; }
+    if (cell[0][2] == 0 && cell[1][1] == 2 && cell[2][0] == 2) { x = 3; return true; }
+
+    return false;
+};
+bool tictatoe::canBlock(int &x)
+{
+    // Vérifie les lignes
+    for (int i = 0; i < 3; i++)
+    {
+        if (cell[i][0] == 1 && cell[i][1] == 1 && cell[i][2] == 0) { x = i * 3 + 3; return true; }
+        if (cell[i][0] == 1 && cell[i][1] == 0 && cell[i][2] == 1) { x = i * 3 + 2; return true; }
+        if (cell[i][0] == 0 && cell[i][1] == 1 && cell[i][2] == 1) { x = i * 3 + 1; return true; }
+    }
+
+    // Vérifie les colonnes
+    for (int i = 0; i < 3; i++)
+    {
+        if (cell[0][i] == 1 && cell[1][i] == 1 && cell[2][i] == 0) { x = 7 + i; return true; }
+        if (cell[0][i] == 1 && cell[1][i] == 0 && cell[2][i] == 1) { x = 4 + i; return true; }
+        if (cell[0][i] == 0 && cell[1][i] == 1 && cell[2][i] == 1) { x = 1 + i; return true; }
+    }
+
+    // Vérifie les diagonales
+    if (cell[0][0] == 1 && cell[1][1] == 1 && cell[2][2] == 0) { x = 9; return true; }
+    if (cell[0][0] == 1 && cell[1][1] == 0 && cell[2][2] == 1) { x = 5; return true; }
+    if (cell[0][0] == 0 && cell[1][1] == 1 && cell[2][2] == 1) { x = 1; return true; }
+
+    if (cell[0][2] == 1 && cell[1][1] == 1 && cell[2][0] == 0) { x = 7; return true; }
+    if (cell[0][2] == 1 && cell[1][1] == 0 && cell[2][0] == 1) { x = 5; return true; }
+    if (cell[0][2] == 0 && cell[1][1] == 1 && cell[2][0] == 1) { x = 3; return true; }
+
+    return false;
+};
 
 void tictatoe::mode(string& mode,int& x)
 {
@@ -212,22 +281,46 @@ void tictatoe::mode(string& mode,int& x)
     }
     else if (mode=="robot")
     {   
-    if(turn==1)
-    {
-        cout << "player " << GetTurn() << ":";
-        cin>>x;
-    }
-    else if (turn==2)
-    {   
-        cout << "player " << GetTurn() << ":";
-        srand(time(0));
-        x=rand()%9+1;
-        while (x==a || cell[(x-1) / 3][(x-1) % 3] != 0)
+        if(turn==1)
         {
+            cout << "player " << GetTurn() << ":";
+            cin>>x;
+        }
+        else if (turn==2)
+        {   
+            int a=x;
+            cout << "player " << GetTurn() << ":";
             srand(time(0));
             x=rand()%9+1;
+            if (canWin(x))
+            {
+                cout << "Robot plays to win: " << x << "\n";
+            }
+            // 2. Bloquer l'adversaire
+            else if (canBlock(x))
+            {
+                cout << "Robot blocks player: " << x << "\n";
+            }
+            // 3. Prendre le centre si disponible
+            else if (cell[1][1] == 0)
+            {
+                x = 5;
+                cout << "Robot takes center: " << x << "\n";
+            }
+            else if (takeCorner(x))
+            {
+                cout << "Robot takes a corner: " << x << "\n";
+            }
+
+            else
+            {
+                while (x==a || cell[(x-1) / 3][(x-1) % 3] != 0)
+                {
+                    srand(time(0));
+                    x=rand()%9+1;
+                }
+                cout << "Robot plays: " << x << "\n";
+            }
         }
-        cout << "Robot plays: " << x << "\n";
-    }
     }
 }
