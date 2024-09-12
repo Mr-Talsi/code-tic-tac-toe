@@ -222,6 +222,11 @@ void tictatoe::mode(string& mode,int& x)
         cout << "player " << GetTurn() << ":";
         srand(time(0));
         x=rand()%9+1;
+        while (x==a || cell[(x-1) / 3][(x-1) % 3] != 0)
+        {
+            srand(time(0));
+            x=rand()%9+1;
+        }
         cout << "Robot plays: " << x << "\n";
     }
     }
