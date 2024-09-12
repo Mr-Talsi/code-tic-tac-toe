@@ -1,7 +1,5 @@
 #include <iostream>
 #include "XO.hpp"
-#include "conio.h"
-#include "stdfix.h"
 #include <string>
 #include <limits>
 #include <random>
@@ -109,12 +107,10 @@ int tictatoe::play(int x)
     {
         cout << "Winner is: " << (winner == 1 ? 'X' : 'O') << "\n";
     }
-    else if (winner == 0 && equalitecheck()==1)
+    else if (winner == 0 && equalitecheck() == 1)
     {
-       cout<<"votre game est :draw";
+        cout << "votre game est :draw";
     }
-    
-
 };
 
 void tictatoe::ShowBoard()
@@ -197,7 +193,7 @@ int tictatoe::equalitecheck()
         }
     }
     if (b == 9)
-    { 
+    {
         return 1;
     }
     return 0;
@@ -205,40 +201,103 @@ int tictatoe::equalitecheck()
 bool tictatoe::takeCorner(int &x)
 {
     // Vérifiez si un des coins est disponible, si oui, attribuez cette case à 'x'
-    if (cell[0][0] == 0) { x = 1; return true; }
-    if (cell[0][2] == 0) { x = 3; return true; }
-    if (cell[2][0] == 0) { x = 7; return true; }
-    if (cell[2][2] == 0) { x = 9; return true; }
+    if (cell[0][0] == 0)
+    {
+        x = 1;
+        return true;
+    }
+    if (cell[0][2] == 0)
+    {
+        x = 3;
+        return true;
+    }
+    if (cell[2][0] == 0)
+    {
+        x = 7;
+        return true;
+    }
+    if (cell[2][2] == 0)
+    {
+        x = 9;
+        return true;
+    }
     return false;
 };
-
 
 bool tictatoe::canWin(int &x)
 {
     // Vérifie les lignes
     for (int i = 0; i < 3; i++)
     {
-        if (cell[i][0] == 2 && cell[i][1] == 2 && cell[i][2] == 0) { x = i * 3 + 3; return true; }
-        if (cell[i][0] == 2 && cell[i][1] == 0 && cell[i][2] == 2) { x = i * 3 + 2; return true; }
-        if (cell[i][0] == 0 && cell[i][1] == 2 && cell[i][2] == 2) { x = i * 3 + 1; return true; }
+        if (cell[i][0] == 2 && cell[i][1] == 2 && cell[i][2] == 0)
+        {
+            x = i * 3 + 3;
+            return true;
+        }
+        if (cell[i][0] == 2 && cell[i][1] == 0 && cell[i][2] == 2)
+        {
+            x = i * 3 + 2;
+            return true;
+        }
+        if (cell[i][0] == 0 && cell[i][1] == 2 && cell[i][2] == 2)
+        {
+            x = i * 3 + 1;
+            return true;
+        }
     }
-    
+
     // Vérifie les colonnes
     for (int i = 0; i < 3; i++)
     {
-        if (cell[0][i] == 2 && cell[1][i] == 2 && cell[2][i] == 0) { x = 7 + i; return true; }
-        if (cell[0][i] == 2 && cell[1][i] == 0 && cell[2][i] == 2) { x = 4 + i; return true; }
-        if (cell[0][i] == 0 && cell[1][i] == 2 && cell[2][i] == 2) { x = 1 + i; return true; }
+        if (cell[0][i] == 2 && cell[1][i] == 2 && cell[2][i] == 0)
+        {
+            x = 7 + i;
+            return true;
+        }
+        if (cell[0][i] == 2 && cell[1][i] == 0 && cell[2][i] == 2)
+        {
+            x = 4 + i;
+            return true;
+        }
+        if (cell[0][i] == 0 && cell[1][i] == 2 && cell[2][i] == 2)
+        {
+            x = 1 + i;
+            return true;
+        }
     }
 
     // Vérifie les diagonales
-    if (cell[0][0] == 2 && cell[1][1] == 2 && cell[2][2] == 0) { x = 9; return true; }
-    if (cell[0][0] == 2 && cell[1][1] == 0 && cell[2][2] == 2) { x = 5; return true; }
-    if (cell[0][0] == 0 && cell[1][1] == 2 && cell[2][2] == 2) { x = 1; return true; }
+    if (cell[0][0] == 2 && cell[1][1] == 2 && cell[2][2] == 0)
+    {
+        x = 9;
+        return true;
+    }
+    if (cell[0][0] == 2 && cell[1][1] == 0 && cell[2][2] == 2)
+    {
+        x = 5;
+        return true;
+    }
+    if (cell[0][0] == 0 && cell[1][1] == 2 && cell[2][2] == 2)
+    {
+        x = 1;
+        return true;
+    }
 
-    if (cell[0][2] == 2 && cell[1][1] == 2 && cell[2][0] == 0) { x = 7; return true; }
-    if (cell[0][2] == 2 && cell[1][1] == 0 && cell[2][0] == 2) { x = 5; return true; }
-    if (cell[0][2] == 0 && cell[1][1] == 2 && cell[2][0] == 2) { x = 3; return true; }
+    if (cell[0][2] == 2 && cell[1][1] == 2 && cell[2][0] == 0)
+    {
+        x = 7;
+        return true;
+    }
+    if (cell[0][2] == 2 && cell[1][1] == 0 && cell[2][0] == 2)
+    {
+        x = 5;
+        return true;
+    }
+    if (cell[0][2] == 0 && cell[1][1] == 2 && cell[2][0] == 2)
+    {
+        x = 3;
+        return true;
+    }
 
     return false;
 };
@@ -247,51 +306,99 @@ bool tictatoe::canBlock(int &x)
     // Vérifie les lignes
     for (int i = 0; i < 3; i++)
     {
-        if (cell[i][0] == 1 && cell[i][1] == 1 && cell[i][2] == 0) { x = i * 3 + 3; return true; }
-        if (cell[i][0] == 1 && cell[i][1] == 0 && cell[i][2] == 1) { x = i * 3 + 2; return true; }
-        if (cell[i][0] == 0 && cell[i][1] == 1 && cell[i][2] == 1) { x = i * 3 + 1; return true; }
+        if (cell[i][0] == 1 && cell[i][1] == 1 && cell[i][2] == 0)
+        {
+            x = i * 3 + 3;
+            return true;
+        }
+        if (cell[i][0] == 1 && cell[i][1] == 0 && cell[i][2] == 1)
+        {
+            x = i * 3 + 2;
+            return true;
+        }
+        if (cell[i][0] == 0 && cell[i][1] == 1 && cell[i][2] == 1)
+        {
+            x = i * 3 + 1;
+            return true;
+        }
     }
 
     // Vérifie les colonnes
     for (int i = 0; i < 3; i++)
     {
-        if (cell[0][i] == 1 && cell[1][i] == 1 && cell[2][i] == 0) { x = 7 + i; return true; }
-        if (cell[0][i] == 1 && cell[1][i] == 0 && cell[2][i] == 1) { x = 4 + i; return true; }
-        if (cell[0][i] == 0 && cell[1][i] == 1 && cell[2][i] == 1) { x = 1 + i; return true; }
+        if (cell[0][i] == 1 && cell[1][i] == 1 && cell[2][i] == 0)
+        {
+            x = 7 + i;
+            return true;
+        }
+        if (cell[0][i] == 1 && cell[1][i] == 0 && cell[2][i] == 1)
+        {
+            x = 4 + i;
+            return true;
+        }
+        if (cell[0][i] == 0 && cell[1][i] == 1 && cell[2][i] == 1)
+        {
+            x = 1 + i;
+            return true;
+        }
     }
 
     // Vérifie les diagonales
-    if (cell[0][0] == 1 && cell[1][1] == 1 && cell[2][2] == 0) { x = 9; return true; }
-    if (cell[0][0] == 1 && cell[1][1] == 0 && cell[2][2] == 1) { x = 5; return true; }
-    if (cell[0][0] == 0 && cell[1][1] == 1 && cell[2][2] == 1) { x = 1; return true; }
+    if (cell[0][0] == 1 && cell[1][1] == 1 && cell[2][2] == 0)
+    {
+        x = 9;
+        return true;
+    }
+    if (cell[0][0] == 1 && cell[1][1] == 0 && cell[2][2] == 1)
+    {
+        x = 5;
+        return true;
+    }
+    if (cell[0][0] == 0 && cell[1][1] == 1 && cell[2][2] == 1)
+    {
+        x = 1;
+        return true;
+    }
 
-    if (cell[0][2] == 1 && cell[1][1] == 1 && cell[2][0] == 0) { x = 7; return true; }
-    if (cell[0][2] == 1 && cell[1][1] == 0 && cell[2][0] == 1) { x = 5; return true; }
-    if (cell[0][2] == 0 && cell[1][1] == 1 && cell[2][0] == 1) { x = 3; return true; }
+    if (cell[0][2] == 1 && cell[1][1] == 1 && cell[2][0] == 0)
+    {
+        x = 7;
+        return true;
+    }
+    if (cell[0][2] == 1 && cell[1][1] == 0 && cell[2][0] == 1)
+    {
+        x = 5;
+        return true;
+    }
+    if (cell[0][2] == 0 && cell[1][1] == 1 && cell[2][0] == 1)
+    {
+        x = 3;
+        return true;
+    }
 
     return false;
 };
 
-void tictatoe::mode(string& mode,int& x)
+void tictatoe::mode(string &mode, int &x)
 {
-    if (mode=="normal")
+    if (mode == "normal")
     {
         cout << "player " << GetTurn() << ":";
-        cin>>x;
+        cin >> x;
     }
-    else if (mode=="robot")
-    {   
-        if(turn==1)
+    else if (mode == "robot")
+    {
+        if (turn == 1)
         {
             cout << "player " << GetTurn() << ":";
-            cin>>x;
+            cin >> x;
         }
-        else if (turn==2)
-        {   
-            int a=x;
+        else if (turn == 2)
+        {
+            int a = x;
             cout << "player " << GetTurn() << ":";
             srand(time(0));
-            x=rand()%9+1;
+            x = rand() % 9 + 1;
             if (canWin(x))
             {
                 cout << "Robot plays to win: " << x << "\n";
@@ -314,10 +421,10 @@ void tictatoe::mode(string& mode,int& x)
 
             else
             {
-                while (x==a || cell[(x-1) / 3][(x-1) % 3] != 0)
+                while (x == a || cell[(x - 1) / 3][(x - 1) % 3] != 0)
                 {
                     srand(time(0));
-                    x=rand()%9+1;
+                    x = rand() % 9 + 1;
                 }
                 cout << "Robot plays: " << x << "\n";
             }
